@@ -4,8 +4,8 @@ lhida. Escreva uma mensagem de erro se a opc ao for invalida.
  1- Soma de 2 numeros.
  2- Diferenca entre 2 numeros (maior pelo menor).
  3- Produto entre 2 numeros.
- 4- Divisao entre 2 numeros (o denominador n~ao pode ser zero).
- Opc~a*/
+ 4- Divisao entre 2 numeros (o denominador nao pode ser zero).
+ Opcao*/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -25,7 +25,7 @@ lhida. Escreva uma mensagem de erro se a opc ao for invalida.
         printf("\n1- Soma de 2 numeros\n");
         printf("\n2- Diferenca entre 2 numeros (maior pelo menor)\n");
         printf("\n3- Produto entre 2 numeros.\n");
-        printf("\n4- Divis~ao entre 2 numeros (o denominador n~ao pode ser zero)\n");
+        printf("\n4- Divisao entre 2 numeros (o denominador nao pode ser zero)\n");
         printf("\nOpcao:\n");
         scanf("%d", &op);
 
