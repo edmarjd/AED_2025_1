@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct no{
+    int data;
+    int cep;
+    char nome[30];
+    struct no *prox;
+}celula;
+
+celula *criar(void);
+void inserirordem(celula *p, char nome[30], int data, int cep);
+void imprimir(celula *ini);
+
+int main(){
+    FILE *entrada;
+    int dat, cp;
+    char name[30];
+    celula *lista = criar();
+
+    entrada = fopen("liste.txt", "r");
+    while(!feof(entrada)){
+        fscanf(entrada, "%s%d%d", name, &dat,&cp);
+        inserirordem(lista, name, dat, cp);
+    }
+    fclose(entrada);
+
+    imprimir(lista);
+
+    return 0;
+}
+
+celula *criar(void){
+    celula *start = (celula *) malloc(sizeof(celula));
+    start->prox = NULL;
+    return start;
+}
+
+void inserirordem(celula *p, char nome[30], int data, int cep){
+    celula *novo = (celula *) malloc(sizeof(celula));
+    strcpy(novo->nome, nome);
+    novo->data = data;
+    novo->cep = cep;
+
+    celula *atual = p;
+    while(atual->prox != NULL && (atual->prox->cep < novo->cep)){
+        atual = atual->prox;
+    }
+
+    novo->prox = atual->prox;
+    atual->prox = novo;
+}
+void imprimir(celula *ini){
+    FILE *saida;
+    celula *atual = ini;
+    saida = fopen("ordem.txt", "w");
+    for(atual = ini->prox; atual != NULL; atual = atual->prox){
+        fprintf(saida, "%s\n%d\n%d\n", atual->nome, atual->data, atual->cep);
+        printf("Nome: %s\nData: %d\nCEP: %d \n",atual->nome, atual->data, atual->cep);
+    }
+    fclose(saida);
+}
