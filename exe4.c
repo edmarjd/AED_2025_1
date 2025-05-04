@@ -1,3 +1,7 @@
+/* Ler nome, sexo e idade. Se sexo for feminino e idade menor que 25, imprime o nome da
+ pessoa e a palavra “ACEITA”, caso contr´ ario imprimir “NAO ACEITA”.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
