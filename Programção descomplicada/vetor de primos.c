@@ -1,5 +1,5 @@
-/* Leia 10 n´umeros inteiros e armazene em um vetor. Em seguida escreva os elementos
- que s˜ ao primos e suas respectivas posic ¸˜ oes no vetor
+/* Leia 10 numeros inteiros e armazene em um vetor. Em seguida escreva os elementos
+ que sao primos e suas respectivas posicoes no vetor.
 */
 
 #include <stdio.h>
