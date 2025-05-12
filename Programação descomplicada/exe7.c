@@ -18,15 +18,15 @@ int main() {
         scanf("%d", &tamanho);
 
         if (tamanho %sizeof(int) != 0) {
-            printf("Nao e multiplo de %d", sizeof(int));
-            return 1;
+            printf("Nao e multiplo de %d\n", sizeof(int));
+            continue;
         }
 
-    }while (tamanho %sizeof(int) != 0);
+    }while(tamanho %sizeof(int) != 0);
 
     int num_int = tamanho / sizeof(int);
 
-    array = (int *) cslloc(num_int * sizeof(int));
+    array = (int *) calloc(num_int , sizeof(int));
 
 
     do{
@@ -37,34 +37,50 @@ int main() {
 
         switch(op){
             case 1:{
-                int n, valor, j;
+                int n, valor;
 
                 do{
                     printf("Digite a posicao da memoria que desejas inserir dados:\n");
                     scanf("%d", &n);
                     if (n < 0 || n > num_int) {
-                        printf ("Posicao invalida insira um valor entre 0 e o tamnho Maximo");
-                        return 1;
+                        printf ("Posicao invalida insira um valor entre (0 a %d)", num_int - 1);
+                        continue;
                     }
                 }while(n < 0 || n > num_int);
-                
+
                 printf("Digite o valor a ser inserirdo:\n");
                 scanf("%d", &valor);
                 array[n] = valor;
-                break;
-
-                case 2:
-                printf("Digite a posicao de memoria a qual desejas consultar:\n");
-                scanf("%d", &j);
-                printf("O valor da posicao %d e %d ", j, array[j]);
+                printf("Valor armazenado!\n");
                 break;
             }
 
-            case 3:
-            break;
+            case 2: {
+                int j;
+
+                do{
+                    printf("Digite a posicao (0 a %d)\n", num_int -1);
+                    scanf("%d", &j);
+
+                    if (j < 0 || j > num_int) {
+                        printf("Posicao invalida, digite uma entre (0 a %d)\n", num_int - 1);
+                        continue;
+                    }
+
+                }while(j < 0 || j > num_int);
+                printf("O valor da posicao %d , e %d ", j, array[j]);
+                break;
+
+            }
+            
+
+            case 3: {
+                printf("Encerrado!\n");
+                break;
+            }
 
             default:
-            printf("Insira o valor de uma das opcoes do MENU");
+            printf("Insira o valor de uma das opcoes do MENU\n");
             break;
         }
 
