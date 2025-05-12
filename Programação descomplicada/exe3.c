@@ -15,10 +15,9 @@ int main() {
 
     printf("Digite os 5 numeros para serem alocados:\n");
     for (int i = 0; i < 5; i++) {
-        scanf("%d", array[i]);
+        scanf("%d", &array[i]);
     }
 
-    system("cls");
     printf("Os 5 numeros alocados sao: ");
     for (int i = 0; i < 5; i++) {
         printf("%d ", array[i]);
