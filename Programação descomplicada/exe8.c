@@ -34,4 +34,7 @@ int main() {
     for(int i = 1500 - 10; i < 1500; i++) {
         printf("%d ", array[i]);
     }
+
+    free(array);
+    
 }
