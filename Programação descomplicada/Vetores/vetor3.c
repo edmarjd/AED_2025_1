@@ -1,5 +1,5 @@
-/*Fac¸a um programa que calcule o desvio padr ˜ao de um vetor v contendo n = 10 n ´umeros,
-onde m ´e a media do vetor.*/
+/*Faca um programa que calcule o desvio padrao de um vetor v contendo n = 10 numeros,
+onde m e a media do vetor.*/
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
