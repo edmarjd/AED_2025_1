@@ -1,6 +1,6 @@
-/*Fac¸a um programa que leia um vetor de 8 posic¸ ˜oes e, em seguida, leia tamb ´em dois va-
-lores X e Y quaisquer correspondentes a duas posic¸ ˜oes no vetor. Ao final seu programa
-dever ´a escrever a soma dos valores encontrados nas respectivas posic¸ ˜oes X e Y*/
+/*Faca um programa que leia um vetor de 8 posicoes e, em seguida, leia tambem dois va-
+lores X e Y quaisquer correspondentes a duas posicoes no vetor. Ao final seu programa
+devera escrever a soma dos valores encontrados nas respectivas posicoes X e Y*/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,5 +21,5 @@ int main() {
     printf("A soma dos valores encontrados nas resoectivas posicoes e: %d", soma);
 
     return 0;
-    
+
 }
