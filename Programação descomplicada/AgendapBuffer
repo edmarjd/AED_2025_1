@@ -1,0 +1,212 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define TAM_NOME 255
+#define TAM_EMAIL 255
+#define TAM_IDADE 5
+#define MENU sizeof(int) + sizeof(long long int)
+#define TAM_PESSOA (TAM_NOME + TAM_IDADE + TAM_EMAIL)
+#define FIM (MENU + TAM_PESSOA)
+
+void reallocadd(void **pBuffer, int **menu, long long int **qtd, char **nome, char **idade, char **email, void **fim);
+void nextBlock(void **temp);
+void nextPerson(void **temp);
+void addpPerson(long long int **qtd, char **idade, char **nome, char **email, void *temp, void **fim);
+void listarPerson(void **pBuffer, void **temp, void *fim);
+bool searchpPerson(void *pBuffer, char *nome, void **temp, void *fim);
+void EliminatepPerson(void **pBuffer, char **nome, void **temp, void **fim);
+
+int main() {
+    void *pBuffer = malloc(MENU + TAM_PESSOA);
+
+    if (pBuffer == NULL) {
+        perror("Erro de alocacao no inicio do pBuffer!");
+        exit(0);
+    }
+
+    int *menu = NULL;
+    char *idade = NULL;
+    char *nome = NULL;
+    char *email = NULL;
+    void *fim = NULL, *temp = NULL;
+    long long int *qtd = NULL;
+
+    menu = (int *)pBuffer;
+    qtd = (long long int *)((char *)pBuffer + sizeof(int));
+    *qtd = 0;
+    *menu = 0;
+    nome = (char *)(pBuffer + MENU);
+    idade = (char *)(pBuffer + MENU + TAM_NOME);
+    email = (char *)(pBuffer + MENU + TAM_NOME + TAM_IDADE);
+    fim = (pBuffer + FIM);
+
+    do {
+        printf("\n-------------Menu----------\n");
+        printf("\n1. Adicionar\n2. Remover\n3. Buscar\n4. Listar\n5. Sair\n");
+        printf("Digite uma das opcoes do menu: ");
+        scanf("%d", menu);
+        getchar();
+
+        switch (*menu) {
+            case 1:
+                printf("Digite o nome da pessoa:\n");
+                fgets(nome, TAM_NOME, stdin);
+                nome[strcspn(nome, "\n")] = '\0';
+
+                printf("Digite a idade da pessoa:\n");
+                fgets(idade, TAM_IDADE, stdin);
+                idade[strcspn(idade, "\n")] = '\0';
+
+                printf("Digite o email da pessoa:\n");
+                fgets(email, TAM_EMAIL, stdin);
+                email[strcspn(email, "\n")] = '\0';
+
+                reallocadd(&pBuffer, &menu, &qtd, &nome, &idade, &email, &fim);
+                addpPerson(&qtd, &idade, &nome, &email, fim, &fim);
+                break;
+
+            case 2:
+                printf("Digite o nome a ser removido:\n");
+                fgets(nome, TAM_NOME, stdin);
+                nome[strcspn(nome, "\n")] = '\0';
+                EliminatepPerson(&pBuffer, &nome, &temp, &fim);
+                break;
+
+            case 3:
+                printf("\nDigite o nome a ser encontrado:\n");
+                fgets(nome, TAM_NOME, stdin);
+                nome[strcspn(nome, "\n")] = '\0';
+
+                if (searchpPerson(pBuffer, nome, &temp, fim)) {
+                    printf("\n--------------------------");
+                    printf("\n\tNome: %s", (char *)temp);
+                    nextBlock(&temp);
+                    printf("\n\tIdade: %s", (char *)temp);
+                    nextBlock(&temp);
+                    printf("\n\tE-mail: %s\n", (char *)temp);
+                    printf("--------------------------\n");
+                }
+                break;
+
+            case 4:
+                listarPerson(&pBuffer, &temp, fim);
+                break;
+
+            case 5:
+                printf("Programa encerrado!\n");
+                break;
+
+            default:
+                printf("Insira uma opcao valida do menu!");
+        }
+    } while (*menu != 5);
+
+    free(pBuffer);
+    return 0;
+}
+
+void reallocadd(void **pBuffer, int **menu, long long int **qtd, char **nome, char **idade, char **email, void **fim) {
+    void *tempEnder = *pBuffer;
+    **qtd = (sizeof(char) * strlen(*nome) + 1 + sizeof(char) * strlen(*idade) + 1 + sizeof(char) * strlen(*email) + 1);
+    *pBuffer = realloc(*pBuffer, (((long long int)((char *)*fim - (char *)*pBuffer)) + **qtd));
+    if (*pBuffer == NULL) {
+        printf("Nao foi possivel realocar memoria");
+        exit(0);
+    }
+
+    if (tempEnder != *pBuffer) {
+        *menu = (int *)*pBuffer;
+        *qtd = (long long int *)((char *)*pBuffer + sizeof(int));
+        *nome = *pBuffer + MENU;
+        *idade = *pBuffer + MENU + TAM_NOME;
+        *email = *pBuffer + MENU + TAM_NOME + TAM_IDADE;
+        **qtd = (sizeof(char) * strlen(*nome) + 1 + sizeof(char) * strlen(*idade) + 1 + sizeof(char) * strlen(*email) + 1);
+        *fim = (char *)(*pBuffer) + ((char *)*fim - (char *)tempEnder);
+    }
+
+    tempEnder = NULL;
+}
+
+void nextBlock(void **temp) {
+    *temp = (char *)(*temp) + strlen((char *)(*temp)) + 1;
+}
+
+void nextPerson(void **temp) {
+    nextBlock(temp);
+    nextBlock(temp);
+    nextBlock(temp);
+}
+
+void addpPerson(long long int **qtd, char **idade, char **nome, char **email, void *temp, void **fim) {
+    strcpy((char *)temp, *nome);
+    temp = (char *)temp + strlen(*nome) + 1;
+    strcpy((char *)temp, *idade);
+    temp = (char *)temp + strlen(*idade) + 1;
+    strcpy((char *)temp, *email);
+    temp = (char *)temp + strlen(*email) + 1;
+    *fim = temp;
+}
+
+void EliminatepPerson(void **pBuffer, char **nome, void **temp, void **fim) {
+   void *tempRemove = NULL;
+
+    if (searchpPerson(*pBuffer, *nome, &tempRemove, *fim)) {
+        temp = tempRemove;
+        nextPerson(&temp); // temp agora aponta para o próximo bloco depois da pessoa
+
+        // Calcula o tamanho da pessoa que será removida
+        void *novoFim = (char *)(*fim) - ((char *)temp - (char *)tempRemove);
+
+        // Move os dados restantes para cobrir o espaço da pessoa removida
+        memmove(tempRemove, temp, (char *)(*fim) - (char *)temp);
+
+        // Realoca o pBuffer para o novo tamanho
+        *pBuffer = realloc(*pBuffer, (char *)novoFim - (char *)(*pBuffer));
+        if (*pBuffer == NULL) {
+            printf("Erro ao realocar após remoção.\n");
+            exit(1);
+        }
+
+        // Atualiza os ponteiros após realloc
+        *fim = (char *)(*pBuffer) + ((char *)novoFim - (char *)(*pBuffer));
+    } else {
+        printf("Pessoa não encontrada para remoção.\n");
+    }
+}
+
+
+void listarPerson(void **pBuffer, void **temp, void *fim) {
+    *temp = (char *)(*pBuffer) + FIM;
+
+    if (*temp == fim) {
+        printf("Agenda vazia!\n");
+    } else {
+        printf("\nLista de pessoas:\n");
+
+        while (*temp < fim) {
+            printf("\nNome: %s", (char *)*temp);
+            nextBlock(temp);
+            printf("\nIdade: %s", (char *)*temp);
+            nextBlock(temp);
+            printf("\nEmail: %s", (char *)*temp);
+            nextBlock(temp);
+        }
+        printf("\n");
+    }
+}
+
+bool searchpPerson(void *pBuffer, char *nome, void **temp, void *fim) {
+    *temp = (char *)pBuffer + FIM;
+
+    while (*temp < fim) {
+        if (strcmp((char *)(*temp), nome) == 0) {
+            return true;
+        }
+        nextPerson(temp);
+    }
+
+    printf("Nome não encontrado!\n");
+    return false;
+}
