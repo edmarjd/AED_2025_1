@@ -79,12 +79,12 @@ void deletarPessoaPorNome() {
     fgets(nomeBuscar, 30, stdin);
 
 
-    Pessoa PilhaAux[TAM_MAX];
-
     int topoAux = -1;
     int encontrado = 0;
 
-    while (topo == -1) {
+    Pessoa PilhaAux[topoAux];
+
+    while (topo != -1) {
         Pessoa pAtual = POP();
 
         if (strcmp(pAtual.nome, nomeBuscar) == 0) {
@@ -94,7 +94,7 @@ void deletarPessoaPorNome() {
         } else {
             if (topoAux <= TAM_MAX -1) {
                 topoAux++;
-                PilhaAux[TAM_MAX] = pAtual;
+                PilhaAux[topoAux] = pAtual;
             } else {
                 printf("Pilha cheia esrro em alocação!");
             }
