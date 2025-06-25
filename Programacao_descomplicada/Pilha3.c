@@ -7,6 +7,7 @@
 
  #include <stdio.h>
  #include <string.h>
+ #include <stdlib.h>
  #include <stdbool.h>
 
  typedef struct {
@@ -16,7 +17,7 @@
  }Pilha;
 
  Pilha *RESET(int capacidade) {
-    Pilha *p = (Pilha*) malloc(sizeof(Pilha));
+    Pilha *p = (Pilha*) malloc (sizeof(Pilha));
     if (!p) {
         return NULL;
     }
