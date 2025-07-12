@@ -2,17 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(gdb) Launch - Meu Projeto",
+      "name": "(gdb) Depurar Arquivo C",
       "type": "cppdbg",
       "request": "launch",
-      "program": "C:/Users/EDMAR/AED_2025_1/Programacao_descomplicada",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "C:/Users/EDMAR/AED_2025_1/Programacao_descomplicada",
+      "cwd": "${fileDirname}",
       "environment": [],
-      "externalConsole": true,
+      "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "C:\\MinGW\\bin\\gdb",
+      "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
@@ -20,7 +20,7 @@
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "C/C++: g++.exe build active file"
+      "preLaunchTask": "Compilar C (GCC)"
     },
     {
       "name": "C/C++ Runner: Debug Session",
@@ -29,8 +29,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/EDMAR/AED_2025_1/Programacao_descomplicada/String",
-      "program": "c:/Users/EDMAR/AED_2025_1/Programacao_descomplicada/String/build/Debug/outDebug",
+      "cwd": "c:/Users/EDMAR/AED_2025_1",
+      "program": "c:/Users/EDMAR/AED_2025_1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

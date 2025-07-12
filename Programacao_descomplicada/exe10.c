@@ -1,3 +1,4 @@
+
 /*9. Fac ̧a um programa que leia uma quantidade qualquer de numeros armazenando-os na  ́
 memoria e pare a leitura quando o usu  ́ ario entrar um n  ́ umero negativo. Em seguida,  ́
 imprima o vetor lido. Use a func ̧ao REALLOC.  ̃

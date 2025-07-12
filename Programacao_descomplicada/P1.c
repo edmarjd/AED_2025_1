@@ -7,37 +7,25 @@ typedef struct {
     char *dados;
     int topo;
     int capacidade;
-}Pilha;
+} Pilha;
 
 Pilha *RESET(int capacidade) {
     Pilha *p = (Pilha*) malloc(sizeof(Pilha));
     p->dados = (char*) malloc(capacidade * sizeof(char));
     p->topo = -1;
     p->capacidade = capacidade;
-
     return p;
 }
 
 bool EMPTY(Pilha *p) {
-
-    if(p->topo == -1) {
-        return true;
-
-    } else {
-
-        return false;
-    }
+    return p->topo == -1;
 }
 
-bool FULL (Pilha *p) {
-    if(p->topo == p->capacidade - 1) {
-        return true;
-    } else {
-        return false;
-    }
+bool FULL(Pilha *p) {
+    return p->topo == p->capacidade - 1;
 }
 
-bool PUSH (Pilha *p, char s) {
+bool PUSH(Pilha *p, char s) {
     if (!FULL(p)) {
         p->dados[++p->topo] = s;
         return true;
@@ -47,10 +35,9 @@ bool PUSH (Pilha *p, char s) {
     }
 }
 
-char POP (Pilha *p) {
-
+char POP(Pilha *p) {
     if (!EMPTY(p)) {
-      return p->dados[p->topo--];
+        return p->dados[p->topo--];
     } else {
         return '\0';
     }
@@ -62,45 +49,33 @@ void CLEAR(Pilha *p) {
 }
 
 int remover(Pilha *p, char a, char b, int pontos) {
-    Pilha *pAux  = RESET(p->capacidade);
+    Pilha *pAux = RESET(p->capacidade);
     int total = 0;
-
     for (int i = 0; i <= p->topo; i++) {
-
         char atual = p->dados[i];
-
         if (!EMPTY(pAux) && pAux->dados[pAux->topo] == a && atual == b) {
             POP(pAux);
             total += pontos;
         } else {
-            PUSH(pAux, atual);
+            (void)PUSH(pAux, atual); // CORREÇÃO AQUI
         }
     }
-
     p->topo = -1;
-
     for (int i = 0; i <= pAux->topo; i++) {
         p->dados[i] = pAux->dados[i];
     }
-
     p->topo = pAux->topo;
-
-    
     CLEAR(pAux);
     return total;
 }
 
 int maximumGain(char* s, int x, int y) {
-    int len = strlen (s);
-
+    int len = strlen(s);
     Pilha *p = RESET(len * 2);
-
     for (int i = 0; i < len; i++) {
-        PUSH(p, s[i]);
+        (void)PUSH(p, s[i]); // CORREÇÃO AQUI
     }
-
     int resultado = 0;
-    
     if (x >= y) {
         resultado += remover(p, 'a', 'b', x);
         resultado += remover(p, 'b', 'a', y);
@@ -108,8 +83,7 @@ int maximumGain(char* s, int x, int y) {
         resultado += remover(p, 'b', 'a', y);
         resultado += remover(p, 'a', 'b', x);
     }
-
-    CLEAR (p);
+    CLEAR(p);
     return resultado;
 }
 
@@ -117,10 +91,7 @@ int main() {
     char s[] = "cdbcbbaaabab";  
     int x = 4;
     int y = 5;
-
     int resultado = maximumGain(s, x, y);
-
     printf("Resultado maximo: %d\n", resultado);
-
     return 0;
 }
