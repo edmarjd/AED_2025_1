@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/EDMAR/AED_2025_1/Programacao_descomplicada",
-      "program": "c:/Users/EDMAR/AED_2025_1/Programacao_descomplicada/build/Debug/outDebug",
+      "cwd": "c:/Users/EDMAR/AED_2025_1/.vscode",
+      "program": "c:/Users/EDMAR/AED_2025_1/.vscode/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

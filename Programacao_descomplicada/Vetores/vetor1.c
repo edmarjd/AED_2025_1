@@ -9,6 +9,7 @@ int main() {
     int v[8], X, Y;
 
     printf("Digite os valores de cada indice do vetor:\n");
+
     for (int i = 0; i < 8; i++) {
         scanf("%d", &v[i]);
     }
